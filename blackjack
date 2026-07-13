@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blackjack - Royal Casino</title>
+
+<link rel="stylesheet" href="Css.css/style.css">
+
+<style>
+.game{
+    min-height:80vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+}
+
+.table{
+    background:#1b1b1b;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 0 25px gold;
+    width:500px;
+    text-align:center;
+}
+
+.cards{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin:15px 0;
+}
+
+.card{
+    width:70px;
+    height:90px;
+    background:white;
+    color:black;
+    border-radius:10px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:20px;
+    font-weight:bold;
+}
+
+button{
+    padding:12px 25px;
+    margin:5px;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.hit{ background:gold; }
+.stand{ background:#ddd; }
+
+#msg{
+    margin-top:15px;
+    color:gold;
+    font-size:20px;
+    min-height:30px;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+    <div class="logo">🎰 Royal Casino</div>
+
+    <nav>
+        <a href="index.html">Início</a>
+        <a href="jogos.html">Jogos</a>
+        <a href="#">Promoções</a>
+        <a href="#">Contato</a>
+    </nav>
+</header>
+
+<div class="game">
+
+<div class="table">
+
+<h1 style="color:gold;">🃏 Blackjack</h1>
+
+<h3>Dealer</h3>
+<div class="cards" id="dealerCards"></div>
+<p>Pontos: <span id="dealerScore">0</span></p>
+
+<hr style="margin:20px 0; border:1px solid #333;">
+
+<h3>Jogador</h3>
+<div class="cards" id="playerCards"></div>
+<p>Pontos: <span id="playerScore">0</span></p>
+
+<button class="hit" onclick="hit()">Pedir Carta</button>
+<button class="stand" onclick="stand()">Parar</button>
+<button onclick="reset()">Reiniciar</button>
+
+<div id="msg"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let player = [];
+let dealer = [];
+let gameOver = false;
+
+function cardValue(){
+    const cards = [2,3,4,5,6,7,8,9,10,10,10,10,11];
+    return cards[Math.floor(Math.random()*cards.length)];
+}
+
+function calcScore(hand){
+    return hand.reduce((a,b)=>a+b,0);
+}
+
+function render(){
+    document.getElementById("playerCards").innerHTML =
+        player.map(c=>`<div class="card">${c}</div>`).join("");
+
+    document.getElementById("dealerCards").innerHTML =
+        dealer.map(c=>`<div class="card">${c}</div>`).join("");
+
+    document.getElementById("playerScore").innerText = calcScore(player);
+    document.getElementById("dealerScore").innerText = calcScore(dealer);
+}
+
+function hit(){
+    if(gameOver) return;
+
+    player.push(cardValue());
+    render();
+
+    if(calcScore(player) > 21){
+        document.getElementById("msg").innerText = "💥 Você estourou! Dealer venceu.";
+        gameOver = true;
+    }
+}
+
+function stand(){
+    if(gameOver) return;
+
+    while(calcScore(dealer) < 17){
+        dealer.push(cardValue());
+    }
+
+    render();
+
+    const p = calcScore(player);
+    const d = calcScore(dealer);
+
+    if(d > 21 || p > d){
+        document.getElementById("msg").innerText = "🎉 Você venceu!";
+    } else if(p < d){
+        document.getElementById("msg").innerText = "😢 Dealer venceu!";
+    } else {
+        document.getElementById("msg").innerText = "🤝 Empate!";
+    }
+
+    gameOver = true;
+}
+
+function reset(){
+    player = [cardValue(), cardValue()];
+    dealer = [cardValue()];
+    gameOver = false;
+    document.getElementById("msg").innerText = "";
+    render();
+}
+
+reset();
+
+</script>
+
+</body>
+</html>
