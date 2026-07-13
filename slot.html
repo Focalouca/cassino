@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caça-Níquel - Royal Casino</title>
+
+    <link rel="stylesheet" href="Css.css/style.css">
+
+    <style>
+        .slot-container{
+            min-height:80vh;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            gap:30px;
+        }
+
+        .slot-machine{
+            background:#1b1b1b;
+            padding:40px;
+            border-radius:20px;
+            box-shadow:0 0 25px gold;
+            text-align:center;
+        }
+
+        .reels{
+            display:flex;
+            gap:15px;
+            justify-content:center;
+            margin:30px 0;
+        }
+
+        .reel{
+            width:100px;
+            height:100px;
+            background:white;
+            border-radius:12px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:50px;
+        }
+
+        .spin-btn{
+            padding:15px 40px;
+            background:gold;
+            border:none;
+            border-radius:30px;
+            font-size:20px;
+            cursor:pointer;
+            transition:.3s;
+        }
+
+        .spin-btn:hover{
+            transform:scale(1.05);
+            box-shadow:0 0 15px gold;
+        }
+
+        #msg{
+            color:gold;
+            font-size:22px;
+            margin-top:20px;
+            min-height:30px;
+        }
+    </style>
+
+</head>
+<body>
+
+<header>
+
+    <div class="logo">🎰 Royal Casino</div>
+
+    <nav>
+        <a href="index.html">Início</a>
+        <a href="jogos.html">Jogos</a>
+         <a href="#">Promoções</a>
+        <a href="#">Contato</a>
+    </nav>
+
+</header>
+
+<div class="slot-container">
+
+    <div class="slot-machine">
+
+        <h1 style="color:gold;">🎰 Caça-Níquel</h1>
+
+        <div class="reels">
+            <div class="reel" id="r1">🍒</div>
+            <div class="reel" id="r2">🍋</div>
+            <div class="reel" id="r3">⭐</div>
+        </div>
+
+        <button class="spin-btn" onclick="spin()">
+            Girar
+        </button>
+
+        <div id="msg"></div>
+
+    </div>
+
+</div>
+
+<script>
+const symbols = ["🍒","🍋","🍇","🍉","⭐","🔔","💎","7️⃣"];
+
+function randomSymbol(){
+    return symbols[Math.floor(Math.random()*symbols.length)];
+}
+
+function spin(){
+
+    const msg = document.getElementById("msg");
+    msg.innerHTML = "";
+
+    let count = 0;
+
+    const interval = setInterval(() => {
+
+        document.getElementById("r1").innerHTML = randomSymbol();
+        document.getElementById("r2").innerHTML = randomSymbol();
+        document.getElementById("r3").innerHTML = randomSymbol();
+
+        count++;
+
+        if(count > 15){
+            clearInterval(interval);
+
+            const a = randomSymbol();
+            const b = randomSymbol();
+            const c = randomSymbol();
+
+            document.getElementById("r1").innerHTML = a;
+            document.getElementById("r2").innerHTML = b;
+            document.getElementById("r3").innerHTML = c;
+
+            if(a === b && b === c){
+                msg.innerHTML = "🎉 JACKPOT! Tudo igual!";
+            } else if(a === b || b === c || a === c){
+                msg.innerHTML = "👏 Quase lá! Dois iguais!";
+            } else {
+                msg.innerHTML = "😄 Tente novamente!";
+            }
+        }
+
+    }, 80);
+}
+</script>
+
+</body>
+</html>
