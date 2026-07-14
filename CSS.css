@@ -89,26 +89,26 @@ footer{
 
 /* ===== Página Jogos ===== */
 
-pagina-jogos{
+.pagina-jogos{
     padding:80px 10%;
     min-height:80vh;
     background:#0d0d0d;
 }
 
-pagina-jogos h1{
+.pagina-jogos h1{
     text-align:center;
     color:gold;
     font-size:50px;
     margin-bottom:50px;
 }
 
-cards{
+.cards{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
     gap:30px;
 }
 
-card{
+.card{
     background:#1b1b1b;
     border:2px solid #2c2c2c;
     border-radius:15px;
@@ -117,30 +117,30 @@ card{
     transition:0.3s;
 }
 
-card:hover{
+.card:hover{
     transform:translateY(-10px);
     border-color:gold;
     box-shadow:0 0 20px rgba(255,215,0,.5);
 }
 
-card h2{
+.card h2{
     color:gold;
     margin-bottom:15px;
 }
 
-card p{
+.card p{
     color:#ccc;
     margin-bottom:25px;
     line-height:1.6;
 }
 
-card .botao{
+.card .botao{
     width:100%;
     display:inline-block;
 }
 
 
-roleta{
+.roleta{
     position: relative;
     overflow: hidden;
 }
@@ -183,6 +183,11 @@ nav a{
     padding:8px 15px;
     border-radius:8px;
     transition:0.2s;
+}
+
+nav a:hover{
+    background:gold;
+    color:#111;
 }
 
 nav a:hover{
