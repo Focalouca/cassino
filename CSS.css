@@ -108,7 +108,7 @@ footer{
     gap:30px;
 }
 
-.card{
+card{
     background:#1b1b1b;
     border:2px solid #2c2c2c;
     border-radius:15px;
